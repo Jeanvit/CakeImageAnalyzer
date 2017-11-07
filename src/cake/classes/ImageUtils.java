@@ -132,7 +132,7 @@ public class ImageUtils {
 
 //------------------------------------------------------------------------------------------ 
    
-    /* Create a array of int, representing a histogram of a given image
+    /* Create a array of ints, representing the histogram of a given image
     * @param BufferedImage originalImage - The image to be processed
     * @param int numberOfBins - Number of histogram bins 
     * @return int bins[] - The array containing the occurrence of each intensity pixel (the histogram)
@@ -162,10 +162,8 @@ public class ImageUtils {
 	  double entropyValue = 0,temp=0;
 	  double totalSize = image.getHeight() * image.getWidth(); //total size of all symbols in an image
 
-	  for(int i=0;i<maxValue;i++)
-	  { //the number of times a sybmol has occured
-	    if(bins[i]>0) //log of zero goes to infinity
-	      {
+	  for(int i=0;i<maxValue;i++){ //the number of times a sybmol has occured
+	    if(bins[i]>0){ //log of zero goes to infinity
 	        temp=(bins[i]/totalSize)*(Math.log(totalSize/bins[i]));
 	        entropyValue += temp;
 	      }
