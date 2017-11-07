@@ -81,7 +81,7 @@ public class mainScreen extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cake Image Analyser");
+        setTitle("Cake Image Analyzer");
         setName("mainFrame"); // NOI18N
 
         lblFileName.setText("File: None");
@@ -301,7 +301,7 @@ public class mainScreen extends javax.swing.JFrame {
         String infoMessage="Developed by Jean Vitor de Paulo\n"
                 +          "          www.jeanvitor.com\n"
                 +          "    jeanvitordepaulo@gmail.com\n"
-                +          "      Version 1.0, 05/11/2017    ";
+                +          "      Version 1.0, 07/11/2017    ";
         JOptionPane.showMessageDialog(null, infoMessage, "About", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 //------------------------------------------------------------------------------------------ 

@@ -68,7 +68,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Cake Image Analyser"/>
+    <Property name="title" type="java.lang.String" value="Cake Image Analyzer"/>
     <Property name="name" type="java.lang.String" value="mainFrame" noResource="true"/>
   </Properties>
   <SyntheticProperties>
