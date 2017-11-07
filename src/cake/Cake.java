@@ -18,6 +18,7 @@ public class Cake {
         ImageIcon img = new ImageIcon("iconCake.jpg");
         Main.setIconImage(img.getImage());
         Main.setResizable(false);
+        
     }
     
 }

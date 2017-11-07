@@ -6,14 +6,14 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 /**
- *
- * @author Jean Vitor de Paulo
+ * * @author Jean Vitor de Paulo
  * Util class for helping the in the image processing
  */
 public class ImageUtils {
     
     private ImageUtils(){};
 //------------------------------------------------------------------------------------------     
+   
     /* Process a image to obtain its alpha channel
     * @param BufferedImage originalImage - The image to be processed
     * @return BufferedImage originalImage - The alpha channel of the given image
@@ -52,6 +52,7 @@ public class ImageUtils {
     }
     
 //------------------------------------------------------------------------------------------   
+   
     /* Process a image to obtain its red channel
     * @param BufferedImage originalImage - The image to be processed
     * @return BufferedImage originalImage - The red channel of the given image
@@ -71,6 +72,7 @@ public class ImageUtils {
     }
     
  //------------------------------------------------------------------------------------------   
+   
     /* Process a image to obtain its gren channel
     * @param BufferedImage originalImage - The image to be processed
     * @return BufferedImage originalImage - The green channel of the given image
@@ -90,6 +92,7 @@ public class ImageUtils {
     }
     
 //------------------------------------------------------------------------------------------   
+  
     /* Process a image to obtain a 8 bit grayscale representation
     * @param BufferedImage originalImage - The image to be processed
     * @return BufferedImage img - The 8bit grayscale of the given image
@@ -103,6 +106,7 @@ public class ImageUtils {
     }
     
 //------------------------------------------------------------------------------------------ 
+   
     /* Rescale a image trying to maintain its proportion
     * @param BufferedImage originalImage - The image to be processed
     * @param int width - The new width
@@ -127,6 +131,7 @@ public class ImageUtils {
     }
 
 //------------------------------------------------------------------------------------------ 
+   
     /* Create a array of int, representing a histogram of a given image
     * @param BufferedImage originalImage - The image to be processed
     * @param int numberOfBins - Number of histogram bins 
@@ -146,6 +151,7 @@ public class ImageUtils {
     }
 
 //------------------------------------------------------------------------------------------
+   
     /* Compute the entropy of an image based on the Shannon's Formula
     * @param BufferedImage originalImage - The image to be processed
     * @param int maxValue - The maximum value of intensity pixels, the same number as the histogram bins

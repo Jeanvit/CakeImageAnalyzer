@@ -23,7 +23,7 @@ public class mainScreen extends javax.swing.JFrame {
     BufferedImage blueImage;
     BufferedImage greenImage;
     BufferedImage redImage;
-    BufferedImage alphaImage;
+    //BufferedImage alphaImage;
     BufferedImage image;
     panelStatus statusGreen = panelStatus.NOTCHANGED;
     panelStatus statusRed = panelStatus.NOTCHANGED;
@@ -51,19 +51,17 @@ public class mainScreen extends javax.swing.JFrame {
 
         jPanel4 = new javax.swing.JPanel();
         lblFileName = new javax.swing.JLabel();
-        lblTitle = new javax.swing.JLabel();
         lbl8bit = new javax.swing.JLabel();
         lblRed = new javax.swing.JLabel();
         lblGreen = new javax.swing.JLabel();
         lblBlue = new javax.swing.JLabel();
-        lblAlpha = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         pnlMain = new javax.swing.JPanel();
         pnlRed = new javax.swing.JPanel();
         pnlGreen = new javax.swing.JPanel();
         pnlBlue = new javax.swing.JPanel();
-        pnlAlpha = new javax.swing.JPanel();
         lblChannels = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         menGeneral = new javax.swing.JMenuBar();
         menOpen = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -88,18 +86,13 @@ public class mainScreen extends javax.swing.JFrame {
 
         lblFileName.setText("File: None");
 
-        lblTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblTitle.setText("Entropy values:");
+        lbl8bit.setText("Original Image:");
 
-        lbl8bit.setText("8-bit image:");
-
-        lblRed.setText("Red Channe:");
+        lblRed.setText("Red Channel:");
 
         lblGreen.setText("Green Channel:");
 
         lblBlue.setText("Blue Channel:");
-
-        lblAlpha.setText("Alpha Channel:");
 
         pnlMain.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -107,7 +100,7 @@ public class mainScreen extends javax.swing.JFrame {
         pnlMain.setLayout(pnlMainLayout);
         pnlMainLayout.setHorizontalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 765, Short.MAX_VALUE)
+            .addGap(0, 781, Short.MAX_VALUE)
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +122,7 @@ public class mainScreen extends javax.swing.JFrame {
         );
         pnlRedLayout.setVerticalGroup(
             pnlRedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 111, Short.MAX_VALUE)
+            .addGap(0, 132, Short.MAX_VALUE)
         );
 
         pnlGreen.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -143,11 +136,11 @@ public class mainScreen extends javax.swing.JFrame {
         pnlGreen.setLayout(pnlGreenLayout);
         pnlGreenLayout.setHorizontalGroup(
             pnlGreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 199, Short.MAX_VALUE)
         );
         pnlGreenLayout.setVerticalGroup(
             pnlGreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 103, Short.MAX_VALUE)
+            .addGap(0, 130, Short.MAX_VALUE)
         );
 
         pnlBlue.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -161,32 +154,16 @@ public class mainScreen extends javax.swing.JFrame {
         pnlBlue.setLayout(pnlBlueLayout);
         pnlBlueLayout.setHorizontalGroup(
             pnlBlueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 151, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pnlBlueLayout.setVerticalGroup(
             pnlBlueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 110, Short.MAX_VALUE)
+            .addGap(0, 133, Short.MAX_VALUE)
         );
 
-        pnlAlpha.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        pnlAlpha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlAlphaMouseClicked(evt);
-            }
-        });
+        lblChannels.setText("RGB Channels");
 
-        javax.swing.GroupLayout pnlAlphaLayout = new javax.swing.GroupLayout(pnlAlpha);
-        pnlAlpha.setLayout(pnlAlphaLayout);
-        pnlAlphaLayout.setHorizontalGroup(
-            pnlAlphaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlAlphaLayout.setVerticalGroup(
-            pnlAlphaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 108, Short.MAX_VALUE)
-        );
-
-        lblChannels.setText("RGBA Channels");
+        jLabel1.setText("Entropy values");
 
         menOpen.setText("File");
 
@@ -228,42 +205,47 @@ public class mainScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblFileName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl8bit)
-                            .addComponent(lblRed)
-                            .addComponent(lblGreen)
-                            .addComponent(lblBlue)
-                            .addComponent(lblAlpha))
-                        .addGap(0, 855, Short.MAX_VALUE))
+                        .addComponent(lblFileName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(28, 28, 28))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlBlue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlGreen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(pnlGreen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pnlBlue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pnlRed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblChannels)
-                                .addGap(32, 32, 32))
-                            .addComponent(pnlRed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlAlpha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                                .addGap(84, 84, 84))))))
+            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
-                .addGap(411, 411, 411)
-                .addComponent(lblTitle)
+                .addGap(129, 129, 129)
+                .addComponent(lbl8bit)
+                .addGap(116, 116, 116)
+                .addComponent(lblRed)
+                .addGap(126, 126, 126)
+                .addComponent(lblGreen)
+                .addGap(112, 112, 112)
+                .addComponent(lblBlue)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(457, 457, 457))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblChannels, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -271,24 +253,19 @@ public class mainScreen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlGreen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlBlue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlAlpha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblTitle)
-                .addGap(26, 26, 26)
-                .addComponent(lbl8bit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblRed)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblGreen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblBlue)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblAlpha)
-                .addGap(31, 31, 31)
+                        .addComponent(pnlBlue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGreen)
+                    .addComponent(lblRed)
+                    .addComponent(lbl8bit)
+                    .addComponent(lblBlue))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(lblFileName))
         );
 
@@ -305,13 +282,13 @@ public class mainScreen extends javax.swing.JFrame {
              file = fileChooser.getSelectedFile();
              try {
                 loadImages();                
-                updatePanels(image,blueImage,redImage, alphaImage,greenImage);
+                updatePanels(image,blueImage,redImage,greenImage);
                 lblFileName.setText("File: " + file.getAbsolutePath() );
                 lbl8bit.setText("Original mage: " + df.format(ImageUtils.getEntropy(image, maxValue)));
                 lblRed.setText("Red Channel: " + df.format(ImageUtils.getEntropy(redImage, maxValue)));
                 lblGreen.setText("Green Channel: " + df.format(ImageUtils.getEntropy(greenImage, maxValue)));
                 lblBlue.setText("Blue Channel: " + df.format(ImageUtils.getEntropy(blueImage, maxValue)));
-                lblAlpha.setText("Alpha Channel: " + df.format(ImageUtils.getEntropy(alphaImage, maxValue)));
+                //lblAlpha.setText("Alpha Channel: " + df.format(ImageUtils.getEntropy(alphaImage, maxValue)));
             } catch (IOException ex) {
               JOptionPane.showMessageDialog(null, ex, "Error!", JOptionPane.ERROR_MESSAGE);
               
@@ -324,7 +301,7 @@ public class mainScreen extends javax.swing.JFrame {
         String infoMessage="Developed by Jean Vitor de Paulo\n"
                 +          "          www.jeanvitor.com\n"
                 +          "    jeanvitordepaulo@gmail.com\n"
-                +          "      Version 1.0, 02/11/2017    ";
+                +          "      Version 1.0, 05/11/2017    ";
         JOptionPane.showMessageDialog(null, infoMessage, "About", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 //------------------------------------------------------------------------------------------ 
@@ -335,10 +312,10 @@ public class mainScreen extends javax.swing.JFrame {
     private void pnlRedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlRedMouseClicked
         try {
              if (statusGreen == panelStatus.NOTCHANGED){
-                 updatePanels(greenImage, blueImage, redImage, alphaImage, image);
+                 updatePanels(greenImage, blueImage, redImage, image);
                  statusGreen = panelStatus.CHANGED;
             } else {
-                updatePanels(image, blueImage, redImage, alphaImage, greenImage);
+                updatePanels(image, blueImage, redImage, greenImage);
                 statusGreen = panelStatus.NOTCHANGED;
             }
         } catch (IOException ex) {
@@ -349,10 +326,10 @@ public class mainScreen extends javax.swing.JFrame {
     private void pnlGreenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlGreenMouseClicked
         try {
             if (statusBlue == panelStatus.NOTCHANGED){
-                updatePanels(blueImage, image, redImage, alphaImage, greenImage);
+                updatePanels(blueImage, image, redImage, greenImage);
                 statusBlue = panelStatus.CHANGED;
             } else {
-                updatePanels(image, blueImage, redImage, alphaImage, greenImage);
+                updatePanels(image, blueImage, redImage, greenImage);
                 statusBlue = panelStatus.NOTCHANGED;
             }
         } catch (IOException ex) {
@@ -363,30 +340,19 @@ public class mainScreen extends javax.swing.JFrame {
     private void pnlBlueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBlueMouseClicked
         try {
             if (statusRed == panelStatus.NOTCHANGED){
-                updatePanels(redImage, blueImage, image, alphaImage, greenImage);
+                updatePanels(redImage, blueImage, image, greenImage);
                 statusRed = panelStatus.CHANGED;
             } else {
-                updatePanels(image, blueImage, redImage, alphaImage, greenImage);
+                updatePanels(image, blueImage, redImage, greenImage);
                 statusRed = panelStatus.NOTCHANGED;
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_pnlBlueMouseClicked
-//------------------------------------------------------------------------------------------ 
-    private void pnlAlphaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlAlphaMouseClicked
-       try {
-            if (statusAlpha == panelStatus.NOTCHANGED){
-                updatePanels(alphaImage, blueImage, redImage, image, greenImage);
-                statusAlpha = panelStatus.CHANGED;
-            } else {
-                updatePanels(image, blueImage, redImage, alphaImage, greenImage);
-                statusAlpha = panelStatus.NOTCHANGED;
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex, "Error!", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_pnlAlphaMouseClicked
+
+    
+    
 //------------------------------------------------------------------------------------------     
     /* Load all the images
     */
@@ -394,7 +360,7 @@ public class mainScreen extends javax.swing.JFrame {
         image = ImageIO.read(file);
         blueImage=ImageUtils.getBlue(image);
         image = ImageIO.read(file);
-        alphaImage=ImageUtils.getAlpha(image);
+        //alphaImage=ImageUtils.getAlpha(image);
         image = ImageIO.read(file);
         redImage=ImageUtils.getRed(image);
         image = ImageIO.read(file);
@@ -407,29 +373,29 @@ public class mainScreen extends javax.swing.JFrame {
     /* Update the main screen JPanels. This method is used to change the Images between the JPanels
     * @param BufferedImage "swap*" - The image that will be added to its JPanel, accordingly to the color
     */
-    private void updatePanels(BufferedImage swapOriginal, BufferedImage swapBlue, BufferedImage swapRed, BufferedImage swapAlpha, BufferedImage swapGreen) throws IOException{
-        JPanel mainPanel, greenPanel, redPanel, bluePanel, alphaPanel;
+    private void updatePanels(BufferedImage swapOriginal, BufferedImage swapBlue, BufferedImage swapRed, BufferedImage swapGreen) throws IOException{
+        JPanel mainPanel, greenPanel, redPanel, bluePanel;//, alphaPanel;
         pnlMain.removeAll();
         pnlRed.removeAll();
         pnlBlue.removeAll();
         pnlGreen.removeAll();
-        pnlAlpha.removeAll();
+        //pnlAlpha.removeAll();
         mainPanel = new imageViewer(swapOriginal,pnlMain);                
         bluePanel = new simplePanel(swapBlue,pnlGreen);
         greenPanel = new simplePanel(swapGreen,pnlRed);
         redPanel = new simplePanel(swapRed,pnlBlue);
-        alphaPanel = new simplePanel(swapAlpha,pnlAlpha);
+        //alphaPanel = new simplePanel(swapAlpha,pnlAlpha);
         this.getContentPane().add(mainPanel);
         mainPanel.setBounds(1,1, super.getWidth(), super.getHeight());
         redPanel.setBounds(1, 1, super.getWidth(), super.getHeight());
         greenPanel.setBounds(1, 1, super.getWidth(), super.getHeight());
         bluePanel.setBounds(1, 1, super.getWidth(), super.getHeight());
-        alphaPanel.setBounds(1, 1, super.getWidth(), super.getHeight());
+        //alphaPanel.setBounds(1, 1, super.getWidth(), super.getHeight());
         pnlMain.add(mainPanel);
         pnlRed.add(greenPanel);                
         pnlBlue.add(redPanel);                
         pnlGreen.add(bluePanel);                
-        pnlAlpha.add(alphaPanel);      
+        //pnlAlpha.add(alphaPanel);      
         this.revalidate();
         this.repaint();
     }
@@ -476,23 +442,21 @@ public class mainScreen extends javax.swing.JFrame {
     }
 //------------------------------------------------------------------------------------------ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl8bit;
-    private javax.swing.JLabel lblAlpha;
     private javax.swing.JLabel lblBlue;
     private javax.swing.JLabel lblChannels;
     private javax.swing.JLabel lblFileName;
     private javax.swing.JLabel lblGreen;
     private javax.swing.JLabel lblRed;
-    private javax.swing.JLabel lblTitle;
     private javax.swing.JMenu menExit;
     private javax.swing.JMenuBar menGeneral;
     private javax.swing.JMenu menOpen;
-    private javax.swing.JPanel pnlAlpha;
     private javax.swing.JPanel pnlBlue;
     private javax.swing.JPanel pnlGreen;
     private javax.swing.JPanel pnlMain;
