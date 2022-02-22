@@ -27,12 +27,12 @@ import javax.swing.JPanel;
  * Special JPanel that loads an image that can have a region selected
  * @author Jean Vitor de Paulo (modified version of http://blog.sodhanalibrary.com/2015/04/select-rectangular-area-in-image-using.html#.Wf1F1GhSyUk)
  */
-public class imageViewer extends JPanel{
+public class ImageViewer extends JPanel{
     private BufferedImage image;
     private Shape shape = null;
     Point startDrag, endDrag;
 
-    public imageViewer( BufferedImage inputImage, JPanel panel) throws IOException {
+    public ImageViewer( BufferedImage inputImage, JPanel panel) throws IOException {
         image=inputImage;    
         image=ImageUtils.getScaledImage(image, panel.getWidth(),panel.getHeight());
         
