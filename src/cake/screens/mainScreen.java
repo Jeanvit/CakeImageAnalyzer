@@ -3,7 +3,10 @@ package cake.screens;
 import cake.classes.ImageUtils;
 import cake.components.ImageViewer;
 import cake.components.SimplePanel;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -17,7 +20,7 @@ import javax.swing.JPanel;
  * @author Jean Vitor de Paulo Class to manipulate the main screen and its
  * behaviours
  */
-public class MainScreen extends javax.swing.JFrame {
+public class MainScreen extends javax.swing.JFrame implements PropertyChangeListener {
 
     BufferedImage blueImage;
     BufferedImage greenImage;
@@ -179,7 +182,7 @@ public class MainScreen extends javax.swing.JFrame {
         });
         menOpen.add(jMenuItem1);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, 0));
         jMenuItem3.setText("Exit");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,20 +375,28 @@ public class MainScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pnlMainMouseClicked
 
-//------------------------------------------------------------------------------------------
-    /* Load all the images
+    /* Load images
      */
+    private void selectedImage(Rectangle rect) {
+        image = image.getSubimage(rect.x, rect.y, rect.width, rect.height);
+        blueImage = ImageUtils.getBlue(image);
+        redImage = ImageUtils.getRed(image);
+        greenImage = ImageUtils.getGreen(image);
+        try {
+            updatePanels(image, blueImage, redImage, greenImage);
+        } catch (Exception e) {
+            return;
+        }
+
+    }
+
     private void loadImages() throws IOException {
         try {
             image = ImageIO.read(file);
             blueImage = ImageUtils.getBlue(image);
-            image = ImageIO.read(file);
             //alphaImage=ImageUtils.getAlpha(image);
-            image = ImageIO.read(file);
             redImage = ImageUtils.getRed(image);
-            image = ImageIO.read(file);
             greenImage = ImageUtils.getGreen(image);
-            image = ImageIO.read(file);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "File not supported!", "Error!", JOptionPane.ERROR_MESSAGE);
         }
@@ -403,6 +414,7 @@ public class MainScreen extends javax.swing.JFrame {
         pnlGreen.removeAll();
         //pnlAlpha.removeAll();
         mainPanel = new ImageViewer(swapOriginal, pnlMain);
+        mainPanel.addPropertyChangeListener(this);
         bluePanel = new SimplePanel(swapBlue, pnlGreen);
         greenPanel = new SimplePanel(swapGreen, pnlRed);
         redPanel = new SimplePanel(swapRed, pnlBlue);
@@ -430,7 +442,6 @@ public class MainScreen extends javax.swing.JFrame {
         lblBlue.setText("Blue Channel: " + df.format(ImageUtils.getEntropy(blueImage, maxValue)));
     }
 
-//------------------------------------------------------------------------------------------
     /**
      * @param args the command line arguments
      */
@@ -465,6 +476,13 @@ public class MainScreen extends javax.swing.JFrame {
                 new MainScreen().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        Rectangle rect = (Rectangle) evt.getNewValue();
+//        System.out.println(rect.toString());
+//        selectedImage(rect);
     }
 
     public enum panelStatus {

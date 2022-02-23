@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 
 /**
  * * @author Jean Vitor de Paulo Util class for helping the in the image
@@ -15,7 +16,6 @@ public class ImageUtils {
     }
 
     ;
-//------------------------------------------------------------------------------------------
 
     /* Process a image to obtain its alpha channel
     * @param BufferedImage originalImage - The image to be processed
@@ -35,71 +35,65 @@ public class ImageUtils {
         }
         return originalImage;
     }
-//------------------------------------------------------------------------------------------
 
-    /*Process a image to obtain its blue channel
+    /*Process a image to obtain a value of a pixel based on binary shifting
     * @param BufferedImage originalImage - The image to be processed
     * @return BufferedImage originalImage - The blue channel of the given image
      */
-    public static BufferedImage getBlue(BufferedImage originalImage) {
-        int RGBPixel;
-        int bluePixel;
-        for (int i = 0; i <= originalImage.getWidth() - 1; i++) {
-            for (int j = 0; j <= originalImage.getHeight() - 1; j++) {
+    public static BufferedImage getChannel(BufferedImage localImage, int shiftValue) {
+        int RGBPixel, channelPixel;
+        for (int i = 0; i <= localImage.getWidth() - 1; i++) {
+            for (int j = 0; j <= localImage.getHeight() - 1; j++) {
 
-                RGBPixel = originalImage.getRGB(i, j);
-                bluePixel = RGBPixel & 0xff;
+                RGBPixel = localImage.getRGB(i, j);
+                channelPixel = RGBPixel >> shiftValue & 0xff;
 
-                originalImage.setRGB(i, j, (bluePixel));
+                localImage.setRGB(i, j, (channelPixel << shiftValue));
             }
         }
-        return originalImage;
+        return localImage;
     }
 
-//------------------------------------------------------------------------------------------
-    /* Process a image to obtain its red channel
-    * @param BufferedImage originalImage - The image to be processed
-    * @return BufferedImage originalImage - The red channel of the given image
+    /**
+     * Process a image to obtain its blue channel
+     *
+     * @param BufferedImage originalImage - The image to be processed
+     * @return BufferedImage originalImage - The red channel of the given image
+     *
+     */
+    public static BufferedImage getBlue(BufferedImage originalImage) {
+        return getChannel(copyImage(originalImage), 0);
+    }
+
+    /**
+     * Process a image to obtain its red channel
+     *
+     * @param BufferedImage originalImage - The image to be processed
+     * @return BufferedImage originalImage - The red channel of the given image
+    *
      */
     public static BufferedImage getRed(BufferedImage originalImage) {
-        int RGBPixel;
-        int redPixel;
-        for (int i = 0; i <= originalImage.getWidth() - 1; i++) {
-            for (int j = 0; j <= originalImage.getHeight() - 1; j++) {
-
-                RGBPixel = originalImage.getRGB(i, j);
-                redPixel = (RGBPixel >> 16) & 0xff;
-
-                originalImage.setRGB(i, j, (redPixel << 16));
-            }
-        }
-        return originalImage;
+        return getChannel(copyImage(originalImage), 16);
     }
 
-    //------------------------------------------------------------------------------------------
-    /* Process a image to obtain its gren channel
-    * @param BufferedImage originalImage - The image to be processed
-    * @return BufferedImage originalImage - The green channel of the given image
+    /**
+     * Process a image to obtain its gren channel
+     *
+     * @param BufferedImage originalImage - The image to be processed
+     * @return BufferedImage originalImage - The green channel of the given
+     * image
+    *
      */
     public static BufferedImage getGreen(BufferedImage originalImage) {
-        int RGBPixel;
-        int greenPixel;
-        for (int i = 0; i <= originalImage.getWidth() - 1; i++) {
-            for (int j = 0; j <= originalImage.getHeight() - 1; j++) {
-
-                RGBPixel = originalImage.getRGB(i, j);
-                greenPixel = (RGBPixel >> 8) & 0xff;
-
-                originalImage.setRGB(i, j, (greenPixel << 8));
-            }
-        }
-        return originalImage;
+        return getChannel(copyImage(originalImage), 8);
     }
 
-//------------------------------------------------------------------------------------------
-    /* Process a image to obtain a 8 bit grayscale representation
-    * @param BufferedImage originalImage - The image to be processed
-    * @return BufferedImage img - The 8bit grayscale of the given image
+    /**
+     * Process a image to obtain a 8 bit grayscale representation
+     *
+     * @param BufferedImage originalImage - The image to be processed
+     * @return BufferedImage img - The 8bit grayscale of the given image
+    *
      */
     public static BufferedImage getGrayScale8bits(BufferedImage inputImage) {
         BufferedImage img = new BufferedImage(inputImage.getWidth(), inputImage.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
@@ -109,12 +103,14 @@ public class ImageUtils {
         return img;
     }
 
-//------------------------------------------------------------------------------------------
-    /* Rescale a image trying to maintain its proportion
-    * @param BufferedImage originalImage - The image to be processed
-    * @param int width - The new width
-    * @param int height - The new height
-    * @return BufferedImage resizedImage - The image with the new size
+    /**
+     * Rescale a image trying to maintain its proportion
+     *
+     * @param BufferedImage originalImage - The image to be processed
+     * @param int width - The new width
+     * @param int height - The new height
+     * @return BufferedImage resizedImage - The image with the new size
+    *
      */
     public static BufferedImage getScaledImage(BufferedImage image, int width, int height) {
         double factor = 1.0d;
@@ -133,11 +129,14 @@ public class ImageUtils {
         return resizedImg;
     }
 
-//------------------------------------------------------------------------------------------
-    /* Create a array of ints, representing the histogram of a given image
-    * @param BufferedImage originalImage - The image to be processed
-    * @param int numberOfBins - Number of histogram bins
-    * @return int bins[] - The array containing the occurrence of each intensity pixel (the histogram)
+    /**
+     * Create a array of ints, representing the histogram of a given image
+     *
+     * @param BufferedImage originalImage - The image to be processed
+     * @param int numberOfBins - Number of histogram bins
+     * @return int bins[] - The array containing the occurrence of each
+     * intensity pixel (the histogram)
+    *
      */
     public static int[] buildHistogram(BufferedImage image, int numberOfBins) {
         int bins[] = new int[numberOfBins];
@@ -152,11 +151,14 @@ public class ImageUtils {
         return bins;
     }
 
-//------------------------------------------------------------------------------------------
-    /* Compute the entropy of an image based on the Shannon's Formula
-    * @param BufferedImage originalImage - The image to be processed
-    * @param int maxValue - The maximum value of intensity pixels, the same number as the histogram bins
-    * @return int entropyValue - The entropy value
+    /**
+     * Compute the entropy of an image based on the Shannon's Formula
+     *
+     * @param BufferedImage originalImage - The image to be processed
+     * @param int maxValue - The maximum value of intensity pixels, the same
+     * number as the histogram bins
+     * @return int entropyValue - The entropy value
+    *
      */
     public static double getEntropy(BufferedImage image, int maxValue) {
         int bins[] = buildHistogram(image, maxValue);
@@ -170,5 +172,19 @@ public class ImageUtils {
             }
         }
         return entropyValue;
+    }
+
+    /**
+     * Make a copy of a buffered image based on arraycopy
+     *
+     * @param source the image
+     * @return an copy of the source
+     */
+    public static BufferedImage copyImage(BufferedImage source) {
+        BufferedImage bi = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+        byte[] sourceData = ((DataBufferByte) source.getRaster().getDataBuffer()).getData();
+        byte[] biData = ((DataBufferByte) bi.getRaster().getDataBuffer()).getData();
+        System.arraycopy(sourceData, 0, biData, 0, sourceData.length);
+        return bi;
     }
 }
