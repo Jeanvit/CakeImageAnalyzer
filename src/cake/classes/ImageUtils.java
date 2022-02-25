@@ -70,7 +70,7 @@ public class ImageUtils {
      *
      * @param BufferedImage originalImage - The image to be processed
      * @return BufferedImage originalImage - The red channel of the given image
-    *
+     *
      */
     public static BufferedImage getRed(BufferedImage originalImage) {
         return getChannel(copyImage(originalImage), 16);
@@ -82,7 +82,7 @@ public class ImageUtils {
      * @param BufferedImage originalImage - The image to be processed
      * @return BufferedImage originalImage - The green channel of the given
      * image
-    *
+     *
      */
     public static BufferedImage getGreen(BufferedImage originalImage) {
         return getChannel(copyImage(originalImage), 8);
@@ -93,7 +93,7 @@ public class ImageUtils {
      *
      * @param BufferedImage originalImage - The image to be processed
      * @return BufferedImage img - The 8bit grayscale of the given image
-    *
+     *
      */
     public static BufferedImage getGrayScale8bits(BufferedImage inputImage) {
         BufferedImage img = new BufferedImage(inputImage.getWidth(), inputImage.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
@@ -110,7 +110,7 @@ public class ImageUtils {
      * @param int width - The new width
      * @param int height - The new height
      * @return BufferedImage resizedImage - The image with the new size
-    *
+     *
      */
     public static BufferedImage getScaledImage(BufferedImage image, int width, int height) {
         double factor = 1.0d;
@@ -136,7 +136,7 @@ public class ImageUtils {
      * @param int numberOfBins - Number of histogram bins
      * @return int bins[] - The array containing the occurrence of each
      * intensity pixel (the histogram)
-    *
+     *
      */
     public static int[] buildHistogram(BufferedImage image, int numberOfBins) {
         int bins[] = new int[numberOfBins];
@@ -158,7 +158,7 @@ public class ImageUtils {
      * @param int maxValue - The maximum value of intensity pixels, the same
      * number as the histogram bins
      * @return int entropyValue - The entropy value
-    *
+     *
      */
     public static double getEntropy(BufferedImage image, int maxValue) {
         int bins[] = buildHistogram(image, maxValue);

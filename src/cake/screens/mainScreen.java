@@ -31,6 +31,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
     panelStatus statusBlue = panelStatus.NOTCHANGED;
     panelStatus statusAlpha = panelStatus.NOTCHANGED;
     public final int maxValue = 256;
+    private Rectangle currentRect;
     File file;
     private boolean isInitalized = false;
 
@@ -62,7 +63,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         pnlGreen = new javax.swing.JPanel();
         pnlBlue = new javax.swing.JPanel();
         lblChannels = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         menGeneral = new javax.swing.JMenuBar();
         menOpen = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -169,7 +170,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
 
         lblChannels.setText("RGB Channels");
 
-        jLabel1.setText("Entropy values");
+        lblTitle.setText("Entropy values");
 
         menOpen.setText("File");
 
@@ -245,7 +246,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(lblTitle)
                 .addGap(457, 457, 457))
         );
         layout.setVerticalGroup(
@@ -265,7 +266,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
+                .addComponent(lblTitle)
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGreen)
@@ -375,21 +376,6 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         }
     }//GEN-LAST:event_pnlMainMouseClicked
 
-    /* Load images
-     */
-    private void selectedImage(Rectangle rect) {
-        image = image.getSubimage(rect.x, rect.y, rect.width, rect.height);
-        blueImage = ImageUtils.getBlue(image);
-        redImage = ImageUtils.getRed(image);
-        greenImage = ImageUtils.getGreen(image);
-        try {
-            updatePanels(image, blueImage, redImage, greenImage);
-        } catch (Exception e) {
-            return;
-        }
-
-    }
-
     private void loadImages() throws IOException {
         try {
             image = ImageIO.read(file);
@@ -397,6 +383,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
             //alphaImage=ImageUtils.getAlpha(image);
             redImage = ImageUtils.getRed(image);
             greenImage = ImageUtils.getGreen(image);
+            currentRect = new Rectangle(0, 0, image.getWidth(), image.getHeight());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "File not supported!", "Error!", JOptionPane.ERROR_MESSAGE);
         }
@@ -434,12 +421,21 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         this.revalidate();
         this.repaint();
 
-        DecimalFormat df = new DecimalFormat("0.000");
         lblFileName.setText("File: " + file.getAbsolutePath());
-        lbl8bit.setText("Original mage: " + df.format(ImageUtils.getEntropy(image, maxValue)));
-        lblRed.setText("Red Channel: " + df.format(ImageUtils.getEntropy(redImage, maxValue)));
-        lblGreen.setText("Green Channel: " + df.format(ImageUtils.getEntropy(greenImage, maxValue)));
-        lblBlue.setText("Blue Channel: " + df.format(ImageUtils.getEntropy(blueImage, maxValue)));
+        this.setLabelText();
+        lblTitle.setText("Entropy values");
+    }
+
+    private void setLabelText() {
+        lbl8bit.setText(this.getEntropyForLabel("Original Image: ", image.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
+        lblRed.setText(this.getEntropyForLabel("Red Channel: ", redImage.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
+        lblGreen.setText(this.getEntropyForLabel("Green Channel: ", greenImage.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
+        lblBlue.setText(this.getEntropyForLabel("Blue Channel: ", blueImage.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
+    }
+
+    private String getEntropyForLabel(String text, BufferedImage image) {
+        DecimalFormat df = new DecimalFormat("0.000");
+        return text + df.format(ImageUtils.getEntropy(image, maxValue));
     }
 
     /**
@@ -480,16 +476,26 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Rectangle rect = (Rectangle) evt.getNewValue();
-//        System.out.println(rect.toString());
-//        selectedImage(rect);
+        switch (evt.getPropertyName()) {
+            case "cancelSelection":
+                lblTitle.setText("Entropy values");
+                currentRect = new Rectangle(0, 0, image.getWidth(), image.getHeight());
+                break;
+            case "selected":
+                Rectangle rect = (Rectangle) evt.getNewValue();
+                currentRect = new Rectangle(0, 0, rect.width, rect.height);
+                lblTitle.setText("Entropy values (Selected Region)");
+                break;
+        }
+
+        this.setLabelText();
+
     }
 
     public enum panelStatus {
         CHANGED, NOTCHANGED;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -501,6 +507,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
     private javax.swing.JLabel lblFileName;
     private javax.swing.JLabel lblGreen;
     private javax.swing.JLabel lblRed;
+    private javax.swing.JLabel lblTitle;
     private javax.swing.JMenu menExit;
     private javax.swing.JMenuBar menGeneral;
     private javax.swing.JMenu menOpen;

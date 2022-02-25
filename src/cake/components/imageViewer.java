@@ -51,6 +51,13 @@ public class ImageViewer extends JPanel {
 
         this.addMouseListener(new MouseAdapter() {
 
+            public void mouseClicked(MouseEvent e) {
+                startDrag = new Point(e.getX(), e.getY());
+                endDrag = startDrag;
+                repaint();
+                cancelSelection();
+            }
+
             public void mousePressed(MouseEvent e) {
                 startDrag = new Point(e.getX(), e.getY());
                 endDrag = startDrag;
@@ -71,7 +78,7 @@ public class ImageViewer extends JPanel {
                         select(selectedRegion);
                         repaint();
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, ex, "Error!", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Please, select a region inside the panel", "Error!", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -95,6 +102,10 @@ public class ImageViewer extends JPanel {
 
     public void select(Rectangle rect) {
         support.firePropertyChange("selected", "rect", rect);
+    }
+
+    public void cancelSelection() {
+        support.firePropertyChange("cancelSelection", "cancel", "");
     }
 
     public Rectangle getSelectedArea() {
@@ -137,7 +148,7 @@ public class ImageViewer extends JPanel {
      * @param int y1 - The initial Y position
      * @param int y2 - The final Y position
      * @return new Rectangle2D.Float - The positions of the rectangle
-    *
+     *
      */
     private Rectangle2D.Float makeRectangle(int x1, int y1, int x2, int y2) {
         return new Rectangle2D.Float(Math.min(x1, x2), Math.min(y1, y2),
