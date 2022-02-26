@@ -1,9 +1,11 @@
 package cake.screens;
 
-import cake.classes.ImageUtils;
 import cake.components.ImageViewer;
 import cake.components.SimplePanel;
+import cake.utils.ImageUtils;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -16,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- *
  * @author Jean Vitor de Paulo Class to manipulate the main screen and its
  * behaviours
  */
@@ -37,6 +38,8 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
 
     public MainScreen() {
         initComponents();
+        Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/res/cake.png"));
+        setIconImage(image);
         this.setLocationRelativeTo(null);
     }
 
@@ -301,7 +304,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         String infoMessage = "       Developed by Jean Vitor de Paulo\n"
                 + "                www.jeanvitor.com       \n"
-                + "             Version 1.1, 22/02/2022   \n\n\n"
+                + "             Version 1.1, 25/02/2022   \n\n\n"
                 + "              Support this project on: \n"
                 + "     www.buymeacoffee.com/jeanvitor\n";
         JOptionPane.showMessageDialog(null, infoMessage, "About", JOptionPane.INFORMATION_MESSAGE);
@@ -358,6 +361,12 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         }
     }//GEN-LAST:event_pnlBlueMouseClicked
 
+    /**
+     * Called when a mouse action happens on the main panel Do nothing if an
+     * image is on loaded, open the file selection otherwise
+     *
+     * @param evt the mouse event
+     */
     private void pnlMainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMainMouseClicked
         if (this.isInitalized) {
             return;
@@ -376,6 +385,12 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         }
     }//GEN-LAST:event_pnlMainMouseClicked
 
+    /**
+     * Loads the main image, and do the operations to find the other ones
+     * (RED,GREEN,BLUE)
+     *
+     * @throws IOException
+     */
     private void loadImages() throws IOException {
         try {
             image = ImageIO.read(file);
@@ -389,9 +404,12 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         }
     }
 
-//------------------------------------------------------------------------------------------
-    /* Update the main screen JPanels. This method is used to change the Images between the JPanels
-    * @param BufferedImage "swap*" - The image that will be added to its JPanel, accordingly to the color
+    /**
+     * Update the main screen JPanels. This method is used to change the Images
+     * between the JPanels
+     *
+     * @param BufferedImage "swap*" - The image that will be added to its
+     * JPanel, accordingly to the color
      */
     private void updatePanels(BufferedImage swapOriginal, BufferedImage swapBlue, BufferedImage swapRed, BufferedImage swapGreen) throws IOException {
         JPanel mainPanel, greenPanel, redPanel, bluePanel;//, alphaPanel;
@@ -426,6 +444,11 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         lblTitle.setText("Entropy values");
     }
 
+    /**
+     * Set the text that indicates the entropy values The value computation is
+     * also done here, based on the selected region Case nothing is selected,
+     * the entire image is considered
+     */
     private void setLabelText() {
         lbl8bit.setText(this.getEntropyForLabel("Original Image: ", image.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
         lblRed.setText(this.getEntropyForLabel("Red Channel: ", redImage.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
@@ -433,6 +456,13 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         lblBlue.setText(this.getEntropyForLabel("Blue Channel: ", blueImage.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
     }
 
+    /**
+     * Return the label text that indicates the entropy value of a given image
+     *
+     * @param text The text to show on the labelk
+     * @param image The image to calculate the entropy
+     * @return
+     */
     private String getEntropyForLabel(String text, BufferedImage image) {
         DecimalFormat df = new DecimalFormat("0.000");
         return text + df.format(ImageUtils.getEntropy(image, maxValue));
@@ -474,6 +504,11 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         });
     }
 
+    /**
+     * Manage the events received via PropertyChangeListener
+     *
+     * @param evt
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
@@ -487,14 +522,14 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
                 lblTitle.setText("Entropy values (Selected Region)");
                 break;
         }
-
         this.setLabelText();
-
     }
 
+    //Panel status to manage the image changed state
     public enum panelStatus {
         CHANGED, NOTCHANGED;
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

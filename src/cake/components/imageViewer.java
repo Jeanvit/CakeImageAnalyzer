@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cake.components;
 
-import cake.classes.ImageUtils;
+import cake.utils.ImageUtils;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -27,9 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * Special JPanel that loads an image that can have a region selected
- *
- * @author Jean Vitor de Paulo (modified version of
+ * @author Jean Vitor de Paulo (modified version of Special JPanel that loads an
+ * image that can have a region selected
  * http://blog.sodhanalibrary.com/2015/04/select-rectangular-area-in-image-using.html#.Wf1F1GhSyUk)
  */
 public class ImageViewer extends JPanel {
@@ -38,7 +32,6 @@ public class ImageViewer extends JPanel {
     private Shape shape = null;
     private Point startDrag, endDrag;
     private Rectangle selectedRegion;
-    private int startX = 0, startY = 0;
     private PropertyChangeSupport support;
 
     public ImageViewer(BufferedImage inputImage, JPanel panel) throws IOException {
@@ -51,6 +44,7 @@ public class ImageViewer extends JPanel {
 
         this.addMouseListener(new MouseAdapter() {
 
+            //Single mouse click resets the selection
             public void mouseClicked(MouseEvent e) {
                 startDrag = new Point(e.getX(), e.getY());
                 endDrag = startDrag;
@@ -58,20 +52,21 @@ public class ImageViewer extends JPanel {
                 cancelSelection();
             }
 
+            //While holding the left mouse button, update the regions
             public void mousePressed(MouseEvent e) {
                 startDrag = new Point(e.getX(), e.getY());
                 endDrag = startDrag;
                 repaint();
             }
 
-            @Override
+            //When the mouse is released, probably the selection is done
+            //Calculate the values, notify the selected
             public void mouseReleased(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
                 if (endDrag != null && startDrag != null) {
                     try {
                         shape = makeRectangle(startDrag.x, startDrag.y, x, y);
-//                        System.out.println(startDrag.x + " " + startDrag.y + " " + x + " " + y);
                         selectedRegion = new Rectangle(startDrag.x, startDrag.y, x, y);
                         startDrag = null;
                         endDrag = null;
@@ -84,6 +79,7 @@ public class ImageViewer extends JPanel {
             }
         });
 
+        //While dragging the mouse, show the animation and update the region
         this.addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 endDrag = new Point(e.getX(), e.getY());
@@ -100,10 +96,12 @@ public class ImageViewer extends JPanel {
         support.removePropertyChangeListener(pcl);
     }
 
+    //Warn the listeners that an select action just happened
     public void select(Rectangle rect) {
         support.firePropertyChange("selected", "rect", rect);
     }
 
+    //Warn the listeners that they should cancel the selection
     public void cancelSelection() {
         support.firePropertyChange("cancelSelection", "cancel", "");
     }
@@ -112,6 +110,11 @@ public class ImageViewer extends JPanel {
         return this.selectedRegion;
     }
 
+    /**
+     * Function to handle the selection effect
+     *
+     * @param g a Graphics
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -126,14 +129,14 @@ public class ImageViewer extends JPanel {
                 0.50f));
 
         if (shape != null) {
-            g2.setPaint(Color.BLACK);
+            g2.setPaint(Color.YELLOW);
             g2.draw(shape);
             g2.setPaint(Color.YELLOW);
             g2.fill(shape);
         }
 
         if (startDrag != null && endDrag != null) {
-            g2.setPaint(Color.LIGHT_GRAY);
+            g2.setPaint(Color.YELLOW);
             Shape r = makeRectangle(startDrag.x, startDrag.y, endDrag.x,
                     endDrag.y);
             g2.draw(r);

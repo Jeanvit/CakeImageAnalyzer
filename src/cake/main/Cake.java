@@ -3,7 +3,6 @@ package cake.main;
 import cake.screens.MainScreen;
 
 /**
- *
  * @author Jean Vitor de Paulo APP Main class
  */
 public class Cake {

@@ -1,6 +1,6 @@
 package cake.components;
 
-import cake.classes.ImageUtils;
+import cake.utils.ImageUtils;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;

@@ -1,4 +1,4 @@
-package cake.classes;
+package cake.utils;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,8 +7,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
 /**
- * * @author Jean Vitor de Paulo Util class for helping the in the image
- * processing
+ * @author Jean Vitor de Paulo Util class for helping on image processing
  */
 public class ImageUtils {
 
@@ -17,7 +16,8 @@ public class ImageUtils {
 
     ;
 
-    /* Process a image to obtain its alpha channel
+    /**
+    * Process a image to obtain its alpha channel
     * @param BufferedImage originalImage - The image to be processed
     * @return BufferedImage originalImage - The alpha channel of the given image
     */
@@ -36,9 +36,11 @@ public class ImageUtils {
         return originalImage;
     }
 
-    /*Process a image to obtain a value of a pixel based on binary shifting
-    * @param BufferedImage originalImage - The image to be processed
-    * @return BufferedImage originalImage - The blue channel of the given image
+    /**
+     * Process a image to obtain a value of a pixel based on binary shifting
+     *
+     * @param BufferedImage originalImage - The image to be processed
+     * @return BufferedImage originalImage - The blue channel of the given image
      */
     public static BufferedImage getChannel(BufferedImage localImage, int shiftValue) {
         int RGBPixel, channelPixel;
@@ -59,7 +61,6 @@ public class ImageUtils {
      *
      * @param BufferedImage originalImage - The image to be processed
      * @return BufferedImage originalImage - The red channel of the given image
-     *
      */
     public static BufferedImage getBlue(BufferedImage originalImage) {
         return getChannel(copyImage(originalImage), 0);
@@ -70,7 +71,6 @@ public class ImageUtils {
      *
      * @param BufferedImage originalImage - The image to be processed
      * @return BufferedImage originalImage - The red channel of the given image
-     *
      */
     public static BufferedImage getRed(BufferedImage originalImage) {
         return getChannel(copyImage(originalImage), 16);
@@ -93,7 +93,6 @@ public class ImageUtils {
      *
      * @param BufferedImage originalImage - The image to be processed
      * @return BufferedImage img - The 8bit grayscale of the given image
-     *
      */
     public static BufferedImage getGrayScale8bits(BufferedImage inputImage) {
         BufferedImage img = new BufferedImage(inputImage.getWidth(), inputImage.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
@@ -136,7 +135,6 @@ public class ImageUtils {
      * @param int numberOfBins - Number of histogram bins
      * @return int bins[] - The array containing the occurrence of each
      * intensity pixel (the histogram)
-     *
      */
     public static int[] buildHistogram(BufferedImage image, int numberOfBins) {
         int bins[] = new int[numberOfBins];
@@ -158,7 +156,6 @@ public class ImageUtils {
      * @param int maxValue - The maximum value of intensity pixels, the same
      * number as the histogram bins
      * @return int entropyValue - The entropy value
-     *
      */
     public static double getEntropy(BufferedImage image, int maxValue) {
         int bins[] = buildHistogram(image, maxValue);
