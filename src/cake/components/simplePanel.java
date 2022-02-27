@@ -2,6 +2,7 @@ package cake.components;
 
 import cake.utils.ImageUtils;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
@@ -13,7 +14,8 @@ import javax.swing.JPanel;
  */
 public class SimplePanel extends JPanel {
 
-    BufferedImage image;
+    Image image;
+    public int width, height;
 
     public SimplePanel(BufferedImage bf, JPanel panel) {
         if (bf == null) {

@@ -2,7 +2,7 @@ package cake.utils;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
@@ -103,7 +103,7 @@ public class ImageUtils {
     }
 
     /**
-     * Rescale a image trying to maintain its proportion
+     * Rescale an image
      *
      * @param BufferedImage originalImage - The image to be processed
      * @param int width - The new width
@@ -111,21 +111,24 @@ public class ImageUtils {
      * @return BufferedImage resizedImage - The image with the new size
      *
      */
-    public static BufferedImage getScaledImage(BufferedImage image, int width, int height) {
-        double factor = 1.0d;
-        if (image.getWidth() > image.getHeight()) {
-            factor = ((double) image.getHeight() / (double) image.getWidth());
-            height = (int) (width * factor);
-        } else {
-            factor = ((double) image.getWidth() / (double) image.getHeight());
-            width = (int) (height * factor);
+    public static Image getScaledImage(BufferedImage image, int width, int height) {
+        Image im = image;
+        double scale;
+        double imwidth = image.getWidth();
+        double imheight = image.getHeight();
+        if (width > imwidth && height > imheight) {
+            im = image;
+        } else if (width / imwidth < height / imheight) {
+            scale = width / imwidth;
+            im = image.getScaledInstance((int) (scale * imwidth), (int) (scale * imheight), Image.SCALE_SMOOTH);
+        } else if (width / imwidth > height / imheight) {
+            scale = height / imheight;
+            im = image.getScaledInstance((int) (scale * imwidth), (int) (scale * imheight), Image.SCALE_SMOOTH);
+        } else if (width / imwidth == height / imheight) {
+            scale = width / imwidth;
+            im = image.getScaledInstance((int) (scale * imwidth), (int) (scale * imheight), Image.SCALE_SMOOTH);
         }
-        BufferedImage resizedImg = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
-        Graphics2D g2 = resizedImg.createGraphics();
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2.drawImage(image, 0, 0, width, height, null);
-        g2.dispose();
-        return resizedImg;
+        return im;
     }
 
     /**
@@ -171,6 +174,10 @@ public class ImageUtils {
         return entropyValue;
     }
 
+    public static double getEntropy(Image image, int maxValue) {
+        return getEntropy(toBufferedImage(image), maxValue);
+    }
+
     /**
      * Make a copy of a buffered image based on arraycopy
      *
@@ -183,5 +190,27 @@ public class ImageUtils {
         byte[] biData = ((DataBufferByte) bi.getRaster().getDataBuffer()).getData();
         System.arraycopy(sourceData, 0, biData, 0, sourceData.length);
         return bi;
+    }
+
+    /**
+     * Converts a given Image into a BufferedImage
+     *
+     * @param img The Image to be converted
+     * @return The converted BufferedImage
+     */
+    public static BufferedImage toBufferedImage(Image img) {
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
+
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        return bimage;
     }
 }

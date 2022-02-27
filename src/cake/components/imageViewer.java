@@ -6,6 +6,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -28,10 +29,10 @@ import javax.swing.JPanel;
  */
 public class ImageViewer extends JPanel {
 
-    private BufferedImage image;
+    private Image image;
     private Shape shape = null;
     private Point startDrag, endDrag;
-    private Rectangle selectedRegion;
+    private Rectangle selectedRegion, originalImageRectangle;
     private PropertyChangeSupport support;
 
     public ImageViewer(BufferedImage inputImage, JPanel panel) throws IOException {
@@ -39,9 +40,11 @@ public class ImageViewer extends JPanel {
             return;
         }
         image = inputImage;
-        image = ImageUtils.getScaledImage(image, panel.getWidth(), panel.getHeight());
+        image = ImageUtils.getScaledImage(inputImage, panel.getWidth(), panel.getHeight());
         support = new PropertyChangeSupport(this);
-
+        originalImageRectangle = new Rectangle(0, 0, image.getWidth(null), image.getHeight(null));
+        this.setBounds(originalImageRectangle);
+        System.out.println(selectedRegion);
         this.addMouseListener(new MouseAdapter() {
 
             //Single mouse click resets the selection
@@ -158,4 +161,11 @@ public class ImageViewer extends JPanel {
                 Math.abs(x1 - x2), Math.abs(y1 - y2));
     }
 
+    public int getComponentHeight() {
+        return this.originalImageRectangle.height;
+    }
+
+    public int getComponentWidth() {
+        return this.originalImageRectangle.width;
+    }
 }

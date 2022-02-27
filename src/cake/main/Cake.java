@@ -15,5 +15,4 @@ public class Cake {
         main.setVisible(true);
         main.setResizable(false);
     }
-
 }

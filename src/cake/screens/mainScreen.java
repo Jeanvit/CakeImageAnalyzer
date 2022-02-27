@@ -23,10 +23,7 @@ import javax.swing.JPanel;
  */
 public class MainScreen extends javax.swing.JFrame implements PropertyChangeListener {
 
-    BufferedImage blueImage;
-    BufferedImage greenImage;
-    BufferedImage redImage;
-    BufferedImage image;
+    BufferedImage blueImage, greenImage, redImage, image;
     panelStatus statusGreen = panelStatus.NOTCHANGED;
     panelStatus statusRed = panelStatus.NOTCHANGED;
     panelStatus statusBlue = panelStatus.NOTCHANGED;
@@ -399,6 +396,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
             redImage = ImageUtils.getRed(image);
             greenImage = ImageUtils.getGreen(image);
             currentRect = new Rectangle(0, 0, image.getWidth(), image.getHeight());
+            lblFileName.setText("File: " + file.getAbsolutePath());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "File not supported!", "Error!", JOptionPane.ERROR_MESSAGE);
         }
@@ -425,7 +423,6 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         redPanel = new SimplePanel(swapRed, pnlBlue);
         //alphaPanel = new SimplePanel(swapAlpha,pnlAlpha);
         this.getContentPane().add(mainPanel);
-        mainPanel.setBounds(1, 1, super.getWidth(), super.getHeight());
         redPanel.setBounds(1, 1, super.getWidth(), super.getHeight());
         greenPanel.setBounds(1, 1, super.getWidth(), super.getHeight());
         bluePanel.setBounds(1, 1, super.getWidth(), super.getHeight());
@@ -439,7 +436,6 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         this.revalidate();
         this.repaint();
 
-        lblFileName.setText("File: " + file.getAbsolutePath());
         this.setLabelText();
         lblTitle.setText("Entropy values");
     }
@@ -464,6 +460,11 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
      * @return
      */
     private String getEntropyForLabel(String text, BufferedImage image) {
+        DecimalFormat df = new DecimalFormat("0.000");
+        return text + df.format(ImageUtils.getEntropy(image, maxValue));
+    }
+
+    private String getEntropyForLabel(String text, Image image) {
         DecimalFormat df = new DecimalFormat("0.000");
         return text + df.format(ImageUtils.getEntropy(image, maxValue));
     }
