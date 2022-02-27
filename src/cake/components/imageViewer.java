@@ -34,6 +34,7 @@ public class ImageViewer extends JPanel {
     private Point startDrag, endDrag;
     private Rectangle selectedRegion, originalImageRectangle;
     private PropertyChangeSupport support;
+    private boolean clickForCancel = false; // Control if a click is for canceling the current selection
 
     public ImageViewer(BufferedImage inputImage, JPanel panel) throws IOException {
         if (inputImage == null) {
@@ -53,6 +54,7 @@ public class ImageViewer extends JPanel {
                 endDrag = startDrag;
                 repaint();
                 cancelSelection();
+                clickForCancel = true;
 
             }
 
@@ -94,6 +96,8 @@ public class ImageViewer extends JPanel {
         this.addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 endDrag = new Point(e.getX(), e.getY());
+                clickForCancel = false;
+
                 repaint();
             }
         });
@@ -145,6 +149,10 @@ public class ImageViewer extends JPanel {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
                 0.50f));
 
+        //Avoid drawing any shape on a single mouse click
+        if (clickForCancel) {
+            return;
+        }
         if (shape != null) {
             g2.setPaint(Color.YELLOW);
             g2.draw(shape);

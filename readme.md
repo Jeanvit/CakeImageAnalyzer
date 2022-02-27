@@ -20,4 +20,5 @@ Open an image by pressing `O`or going to `File -> Open Image` on the top menu.
 
 # Screenshot
 
-![Screenshot](https://i.imgur.com/uJMNXRf.png)
+![Screenshot](https://i.imgur.com/KEEb7jL.png)
+![Screenshot](https://i.imgur.com/7vK4XIm.png)
