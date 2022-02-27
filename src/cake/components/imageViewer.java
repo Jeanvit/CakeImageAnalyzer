@@ -39,12 +39,12 @@ public class ImageViewer extends JPanel {
         if (inputImage == null) {
             return;
         }
-        image = inputImage;
         image = ImageUtils.getScaledImage(inputImage, panel.getWidth(), panel.getHeight());
         support = new PropertyChangeSupport(this);
         originalImageRectangle = new Rectangle(0, 0, image.getWidth(null), image.getHeight(null));
         this.setBounds(originalImageRectangle);
-        System.out.println(selectedRegion);
+
+//        setLocation(150, 0);
         this.addMouseListener(new MouseAdapter() {
 
             //Single mouse click resets the selection
@@ -53,6 +53,7 @@ public class ImageViewer extends JPanel {
                 endDrag = startDrag;
                 repaint();
                 cancelSelection();
+
             }
 
             //While holding the left mouse button, update the regions
@@ -69,6 +70,13 @@ public class ImageViewer extends JPanel {
                 int y = e.getY();
                 if (endDrag != null && startDrag != null) {
                     try {
+
+                        if (x > image.getWidth(null)) {
+                            x = image.getWidth(null) - 1;
+                        }
+                        if (y > image.getHeight(null)) {
+                            y = image.getHeight(null) - 1;
+                        }
                         shape = makeRectangle(startDrag.x, startDrag.y, x, y);
                         selectedRegion = new Rectangle(startDrag.x, startDrag.y, x, y);
                         startDrag = null;
@@ -102,6 +110,12 @@ public class ImageViewer extends JPanel {
     //Warn the listeners that an select action just happened
     public void select(Rectangle rect) {
         support.firePropertyChange("selected", "rect", rect);
+    }
+
+    //Warn the listeners the "true" image was set to have the panel dimensions
+    //for further calculations based on that
+    public void trueImage(Image image) {
+        support.firePropertyChange("trueImage", "image", ImageUtils.toBufferedImage(image));
     }
 
     //Warn the listeners that they should cancel the selection
@@ -168,4 +182,5 @@ public class ImageViewer extends JPanel {
     public int getComponentWidth() {
         return this.originalImageRectangle.width;
     }
+
 }

@@ -11,16 +11,13 @@ import java.awt.image.DataBufferByte;
  */
 public class ImageUtils {
 
-    private ImageUtils() {
-    }
-
-    ;
-
     /**
-    * Process a image to obtain its alpha channel
-    * @param BufferedImage originalImage - The image to be processed
-    * @return BufferedImage originalImage - The alpha channel of the given image
-    */
+     * Process a image to obtain its alpha channel
+     *
+     * @param BufferedImage originalImage - The image to be processed
+     * @return BufferedImage originalImage - The alpha channel of the given
+     * image
+     */
     public static BufferedImage getAlpha(BufferedImage originalImage) {
         int RGBPixel;
         int alphaPixel;

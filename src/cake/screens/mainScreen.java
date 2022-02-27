@@ -35,8 +35,8 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
 
     public MainScreen() {
         initComponents();
-        Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/res/cake.png"));
-        setIconImage(image);
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/res/cake.png"));
+        setIconImage(icon);
         this.setLocationRelativeTo(null);
     }
 
@@ -66,10 +66,10 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         lblTitle = new javax.swing.JLabel();
         menGeneral = new javax.swing.JMenuBar();
         menOpen = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menOpenImage = new javax.swing.JMenuItem();
+        menClose = new javax.swing.JMenuItem();
         menExit = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menAbout = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -174,36 +174,36 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
 
         menOpen.setText("File");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, 0));
-        jMenuItem1.setText("Open Image");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menOpenImage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, 0));
+        menOpenImage.setText("Open Image");
+        menOpenImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menOpenImageActionPerformed(evt);
             }
         });
-        menOpen.add(jMenuItem1);
+        menOpen.add(menOpenImage);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, 0));
-        jMenuItem3.setText("Exit");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menClose.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
+        menClose.setText("Exit");
+        menClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menCloseActionPerformed(evt);
             }
         });
-        menOpen.add(jMenuItem3);
+        menOpen.add(menClose);
 
         menGeneral.add(menOpen);
 
         menExit.setText("About");
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, 0));
-        jMenuItem2.setText("About Cake Image Analyzer");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menAbout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, 0));
+        menAbout.setText("About Cake Image Analyzer");
+        menAbout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menAboutActionPerformed(evt);
             }
         });
-        menExit.add(jMenuItem2);
+        menExit.add(menAbout);
 
         menGeneral.add(menExit);
 
@@ -281,7 +281,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menOpenImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menOpenImageActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -289,7 +289,9 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
             try {
                 loadImages();
                 updatePanels(image, blueImage, redImage, greenImage);
+                this.setLabelTexts();
                 this.isInitalized = true;
+
                 //lblAlpha.setText("Alpha Channel: " + df.format(ImageUtils.getEntropy(alphaImage, maxValue)));
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, ex, "Error!", JOptionPane.ERROR_MESSAGE);
@@ -297,18 +299,18 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
             }
         }
         //addcomponent function
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menOpenImageActionPerformed
+    private void menAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menAboutActionPerformed
         String infoMessage = "       Developed by Jean Vitor de Paulo\n"
                 + "                www.jeanvitor.com       \n"
-                + "             Version 1.1, 25/02/2022   \n\n\n"
+                + "             Version 1.1.0, 27/02/2022   \n\n\n"
                 + "              Support this project on: \n"
                 + "     www.buymeacoffee.com/jeanvitor\n";
         JOptionPane.showMessageDialog(null, infoMessage, "About", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menAboutActionPerformed
+    private void menCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menCloseActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menCloseActionPerformed
     private void pnlRedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlRedMouseClicked
         if (!this.isInitalized) {
             return;
@@ -375,6 +377,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
             try {
                 loadImages();
                 updatePanels(image, blueImage, redImage, greenImage);
+                this.setLabelTexts();
                 this.isInitalized = true;
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, ex, "Error!", JOptionPane.ERROR_MESSAGE);
@@ -395,7 +398,6 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
             //alphaImage=ImageUtils.getAlpha(image);
             redImage = ImageUtils.getRed(image);
             greenImage = ImageUtils.getGreen(image);
-            currentRect = new Rectangle(0, 0, image.getWidth(), image.getHeight());
             lblFileName.setText("File: " + file.getAbsolutePath());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "File not supported!", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -431,12 +433,14 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
         pnlRed.add(greenPanel);
         pnlBlue.add(redPanel);
         pnlGreen.add(bluePanel);
-        //pnlAlpha.add(alphaPanel);
 
+        //Resize image for futher entropy calculation use
+        image = ImageUtils.toBufferedImage(ImageUtils.getScaledImage(image, mainPanel.getWidth(), mainPanel.getHeight()));
+
+        currentRect = new Rectangle(0, 0, image.getWidth(), image.getHeight());
+        //pnlAlpha.add(alphaPanel);
         this.revalidate();
         this.repaint();
-
-        this.setLabelText();
         lblTitle.setText("Entropy values");
     }
 
@@ -445,7 +449,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
      * also done here, based on the selected region Case nothing is selected,
      * the entire image is considered
      */
-    private void setLabelText() {
+    private void setLabelTexts() {
         lbl8bit.setText(this.getEntropyForLabel("Original Image: ", image.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
         lblRed.setText(this.getEntropyForLabel("Red Channel: ", redImage.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
         lblGreen.setText(this.getEntropyForLabel("Green Channel: ", greenImage.getSubimage(currentRect.x, currentRect.y, currentRect.width, currentRect.height)));
@@ -523,7 +527,7 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
                 lblTitle.setText("Entropy values (Selected Region)");
                 break;
         }
-        this.setLabelText();
+        this.setLabelTexts();
     }
 
     //Panel status to manage the image changed state
@@ -532,9 +536,6 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl8bit;
@@ -544,9 +545,12 @@ public class MainScreen extends javax.swing.JFrame implements PropertyChangeList
     private javax.swing.JLabel lblGreen;
     private javax.swing.JLabel lblRed;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JMenuItem menAbout;
+    private javax.swing.JMenuItem menClose;
     private javax.swing.JMenu menExit;
     private javax.swing.JMenuBar menGeneral;
     private javax.swing.JMenu menOpen;
+    private javax.swing.JMenuItem menOpenImage;
     private javax.swing.JPanel pnlBlue;
     private javax.swing.JPanel pnlGreen;
     private javax.swing.JPanel pnlMain;
